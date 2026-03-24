@@ -1,0 +1,189 @@
+import java.util.*;
+import java.io.*;
+import java.awt.*;
+
+// -------------------- MAIN CLASS --------------------
+public class ELearningApp {
+
+    public static void main(String[] args) {
+
+        // GUI Login (AWT)
+        new LoginPage();
+
+        Scanner sc = new Scanner(System.in);
+        ArrayList<Course> courses = new ArrayList<>();
+
+        // Sample Courses
+        courses.add(new Course(1, "Java"));
+        courses.add(new Course(2, "Python"));
+        courses.add(new Course(3, "Web Development"));
+
+        System.out.println("=== E-Learning Platform ===");
+
+        try {
+            System.out.print("Enter your name: ");
+            String name = sc.nextLine();
+
+            Student student = new Student(name);
+
+            int choice;
+            do {
+                System.out.println("\n1. View Courses");
+                System.out.println("2. Enroll Course");
+                System.out.println("3. Track Progress");
+                System.out.println("4. Save Data");
+                System.out.println("5. Exit");
+
+                System.out.print("Enter choice: ");
+                choice = sc.nextInt();
+
+                switch (choice) {
+                    case 1:
+                        student.viewCourses(courses);
+                        break;
+
+                    case 2:
+                        System.out.print("Enter Course ID: ");
+                        int id = sc.nextInt();
+                        student.enrollCourse(courses, id);
+                        break;
+
+                    case 3:
+                        student.trackProgress();
+                        break;
+
+                    case 4:
+                        FileHandler.saveData(student);
+                        break;
+
+                    case 5:
+                        System.out.println("Thank you!");
+                        break;
+
+                    default:
+                        System.out.println("Invalid choice!");
+                }
+
+            } while (choice != 5);
+
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
+    }
+}
+
+// -------------------- COURSE CLASS --------------------
+class Course {
+    int id;
+    String name;
+
+    Course(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+}
+
+// -------------------- USER CLASS --------------------
+class User {
+    String name;
+
+    User(String name) {
+        this.name = name;
+    }
+}
+
+// -------------------- INTERFACE --------------------
+interface Progress {
+    void trackProgress();
+}
+
+// -------------------- STUDENT CLASS --------------------
+class Student extends User implements Progress {
+
+    ArrayList<Course> enrolledCourses = new ArrayList<>();
+
+    Student(String name) {
+        super(name);
+    }
+
+    void viewCourses(ArrayList<Course> courses) {
+        System.out.println("Available Courses:");
+        for (Course c : courses) {
+            System.out.println(c.id + " - " + c.name);
+        }
+    }
+
+    void enrollCourse(ArrayList<Course> courses, int id) {
+        for (Course c : courses) {
+            if (c.id == id) {
+                enrolledCourses.add(c);
+                System.out.println("Enrolled in " + c.name);
+                return;
+            }
+        }
+        System.out.println("Course not found!");
+    }
+
+    public void trackProgress() {
+        ProgressThread pt = new ProgressThread(enrolledCourses);
+        pt.start();
+    }
+}
+
+// -------------------- MULTITHREADING --------------------
+class ProgressThread extends Thread {
+
+    ArrayList<Course> courses;
+
+    ProgressThread(ArrayList<Course> courses) {
+        this.courses = courses;
+    }
+
+    public void run() {
+        System.out.println("Tracking Progress...");
+        for (Course c : courses) {
+            System.out.println("Course: " + c.name + " -> 50% completed");
+        }
+    }
+}
+
+// -------------------- FILE HANDLING --------------------
+class FileHandler {
+
+    static void saveData(Student s) {
+        try {
+            FileWriter fw = new FileWriter("student.txt");
+
+            fw.write("Student Name: " + s.name + "\n");
+
+            for (Course c : s.enrolledCourses) {
+                fw.write("Course: " + c.name + "\n");
+            }
+
+            fw.close();
+            System.out.println("Data Saved Successfully!");
+
+        } catch (IOException e) {
+            System.out.println("File Error!");
+        }
+    }
+}
+
+// -------------------- AWT GUI --------------------
+class LoginPage {
+    LoginPage() {
+        Frame f = new Frame("Login Page");
+
+        Label l1 = new Label("Username:");
+        TextField t1 = new TextField(20);
+        Button b = new Button("Login");
+
+        f.setLayout(new FlowLayout());
+        f.add(l1);
+        f.add(t1);
+        f.add(b);
+
+        f.setSize(300, 200);
+        f.setVisible(true);
+    }
+}
