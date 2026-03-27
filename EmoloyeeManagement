@@ -1,0 +1,76 @@
+import java.util.Scanner;
+
+class Employee {
+    String name;
+    double salary;
+
+    Employee(String name, double salary) {
+        this.name = name;
+        this.salary = salary;
+    }
+
+    double calculateSalary() {
+        return salary;
+    }
+}
+
+class PermanentEmployee extends Employee {
+    PermanentEmployee(String name, double salary) {
+        super(name, salary);
+    }
+
+    @Override
+    double calculateSalary() {
+        return salary + 5000;   // bonus
+    }
+}
+
+class ContractEmployee extends Employee {
+    ContractEmployee(String name, double salary) {
+        super(name, salary);
+    }
+
+    @Override
+    double calculateSalary() {
+        return salary - 2000;   // deduction
+    }
+}
+
+public class EmployeeDemo {
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+        Employee emp;   // parent class reference (polymorphism)
+
+        System.out.println("Choose Employee Type:");
+        System.out.println("1. Permanent Employee");
+        System.out.println("2. Contract Employee");
+        System.out.print("Enter choice: ");
+        int choice = sc.nextInt();
+        sc.nextLine(); // clear buffer
+
+        System.out.print("Enter Employee Name: ");
+        String name = sc.nextLine();
+
+        System.out.print("Enter Basic Salary: ");
+        double salary = sc.nextDouble();
+
+        // Runtime Polymorphism
+        if (choice == 1) {
+            emp = new PermanentEmployee(name, salary);
+        } else if (choice == 2) {
+            emp = new ContractEmployee(name, salary);
+        } else {
+            System.out.println("Invalid choice!");
+            sc.close();
+            return;
+        }
+
+        System.out.println("\n--- Salary Details ---");
+        System.out.println("Employee Name: " + emp.name);
+        System.out.println("Final Salary : " + emp.calculateSalary());
+
+        sc.close();
+    }
+}
