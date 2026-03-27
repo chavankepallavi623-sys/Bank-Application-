@@ -1,0 +1,86 @@
+import java.util.Scanner;
+
+class StaffMember {
+    String name;
+    String department;
+
+    void getDetails(String name, String department) {
+        this.name = name;
+        this.department = department;
+    }
+
+    void displayRole() {
+        System.out.println("Staff Member");
+    }
+}
+
+class Professor extends StaffMember {
+    void displayRole() {
+        System.out.println("Role: Professor");
+        System.out.println("Duty: Teaching students and conducting research");
+    }
+}
+
+class Administrator extends StaffMember {
+    void displayRole() {
+        System.out.println("Role: Administrator");
+        System.out.println("Duty: Managing office and administrative work");
+    }
+}
+
+class Librarian extends StaffMember {
+    void displayRole() {
+        System.out.println("Role: Librarian");
+        System.out.println("Duty: Managing library books and records");
+    }
+}
+
+public class StaffDemo {
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+        StaffMember staff;
+
+        System.out.println("Choose Staff Type:");
+        System.out.println("1. Professor");
+        System.out.println("2. Administrator");
+        System.out.println("3. Librarian");
+        System.out.print("Enter choice: ");
+
+        if (!sc.hasNextInt()) {   // ✔ input validation
+            System.out.println("Error: Please enter a number (1, 2, or 3)");
+            sc.close();
+            return;
+        }
+
+        int choice = sc.nextInt();
+        sc.nextLine(); // clear buffer
+
+        System.out.print("Enter Name: ");
+        String name = sc.nextLine();
+
+        System.out.print("Enter Department: ");
+        String dept = sc.nextLine();
+
+        if (choice == 1) {
+            staff = new Professor();
+        } else if (choice == 2) {
+            staff = new Administrator();
+        } else if (choice == 3) {
+            staff = new Librarian();
+        } else {
+            System.out.println("Invalid choice!");
+            sc.close();
+            return;
+        }
+
+        staff.getDetails(name, dept);
+
+        System.out.println("\n--- Staff Details ---");
+        System.out.println("Name       : " + staff.name);
+        System.out.println("Department : " + staff.department);
+        staff.displayRole(); // runtime polymorphism
+
+        sc.close();
+    }
+}
