@@ -1,0 +1,44 @@
+#include <iostream>
+#include <cmath>   // for sqrt
+using namespace std;
+
+int main()
+{
+    int n, choice;
+    cout << "Enter a number: ";
+    cin >> n;
+
+    cout << "\nMenu:\n";
+    cout << "1. Square\n2. Cube\n3. Square Root\n4. Factorial\n";
+    cout << "Enter your choice: ";
+    cin >> choice;
+
+    switch(choice)
+    {
+        case 1:
+            cout << "Square = " << n*n;
+            break;
+
+        case 2:
+            cout << "Cube = " << n*n*n;
+            break;
+
+        case 3:
+            cout << "Square Root = " << sqrt(n);
+            break;
+
+        case 4:
+        {
+            int fact = 1;
+            for(int i=1; i<=n; i++)
+                fact *= i;
+            cout << "Factorial = " << fact;
+            break;
+        }
+
+        default:
+            cout << "Invalid choice!";
+    }
+
+    return 0;
+}
