@@ -1,0 +1,78 @@
+import java.util.Scanner;
+
+// Parent class
+class Transport {
+    double calculateFare(int distance) {
+        return 0;
+    }
+}
+
+// Child classes
+class Bus extends Transport {
+    @Override
+    double calculateFare(int distance) {
+        return distance * 5;
+    }
+}
+
+class Train extends Transport {
+    @Override
+    double calculateFare(int distance) {
+        return distance * 8;
+    }
+}
+
+class Flight extends Transport {
+    @Override
+    double calculateFare(int distance) {
+        return distance * 15;
+    }
+}
+
+public class TransportDemo {
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+        Transport transport = null;
+
+        try {
+            System.out.println("Choose Transport Mode:");
+            System.out.println("1. Bus");
+            System.out.println("2. Train");
+            System.out.println("3. Flight");
+            System.out.print("Enter choice (1/2/3): ");
+
+            int choice = sc.nextInt();
+
+            System.out.print("Enter Distance (in km): ");
+            int distance = sc.nextInt();
+
+            // Runtime polymorphism
+            switch (choice) {
+                case 1:
+                    transport = new Bus();
+                    break;
+                case 2:
+                    transport = new Train();
+                    break;
+                case 3:
+                    transport = new Flight();
+                    break;
+                default:
+                    System.out.println("Invalid choice! Please enter 1, 2, or 3.");
+                    sc.close();
+                    return;
+            }
+
+            System.out.println("\n--- Fare Details ---");
+            System.out.println("Distance: " + distance + " km");
+            System.out.println("Total Fare: ₹" + transport.calculateFare(distance));
+
+        } catch (Exception e) {
+            System.out.println("ERROR: Please enter NUMBERS only!");
+        }
+
+        sc.close();
+    }
+}
