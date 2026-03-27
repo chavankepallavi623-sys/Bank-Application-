@@ -1,0 +1,70 @@
+import java.util.Scanner;
+
+class Book {
+
+    // Method 1: Add book using only title
+    void addBook(String title) {
+        System.out.println("\nBook Added:");
+        System.out.println("Title: " + title);
+    }
+
+    // Method 2: Add book using title and author
+    void addBook(String title, String author) {
+        System.out.println("\nBook Added:");
+        System.out.println("Title : " + title);
+        System.out.println("Author: " + author);
+    }
+
+    // Method 3: Add book using title, author, and price
+    void addBook(String title, String author, double price) {
+        System.out.println("\nBook Added:");
+        System.out.println("Title : " + title);
+        System.out.println("Author: " + author);
+        System.out.println("Price : ₹" + price);
+    }
+}
+
+public class BookInventory {
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+        Book book = new Book();
+
+        System.out.println("---- Book Inventory System ----");
+        System.out.println("1. Add Book (Title only)");
+        System.out.println("2. Add Book (Title + Author)");
+        System.out.println("3. Add Book (Title + Author + Price)");
+        System.out.print("Enter your choice: ");
+
+        int choice = sc.nextInt();
+        sc.nextLine(); // clear buffer
+
+        if (choice == 1) {
+            System.out.print("Enter Book Title: ");
+            String title = sc.nextLine();
+            book.addBook(title);
+
+        } else if (choice == 2) {
+            System.out.print("Enter Book Title: ");
+            String title = sc.nextLine();
+            System.out.print("Enter Author Name: ");
+            String author = sc.nextLine();
+            book.addBook(title, author);
+
+        } else if (choice == 3) {
+            System.out.print("Enter Book Title: ");
+            String title = sc.nextLine();
+            System.out.print("Enter Author Name: ");
+            String author = sc.nextLine();
+            System.out.print("Enter Book Price: ");
+            double price = sc.nextDouble();
+            book.addBook(title, author, price);
+
+        } else {
+            System.out.println("Invalid Choice!");
+        }
+
+        sc.close();
+    }
+}
