@@ -1,0 +1,26 @@
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    int m1,m2,m3,m4,m5;
+    float avg;
+
+    cout<<"Enter 5 subject marks: ";
+    cin>>m1>>m2>>m3>>m4>>m5;
+
+    avg = (m1+m2+m3+m4+m5)/5.0;
+
+    if(avg>70)
+        cout<<"Distinction";
+    else if(avg>60)
+        cout<<"First Class";
+    else if(avg>50)
+        cout<<"Second Class";
+    else if(avg>40)
+        cout<<"Pass Class";
+    else
+        cout<<"Fail";
+
+    return 0;
+}
